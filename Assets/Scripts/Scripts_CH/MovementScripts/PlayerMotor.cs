@@ -8,7 +8,12 @@ public class PlayerMotor
 
     public int remainingJumps;
 
-    public Vector3 velocity;
+    public Vector3 _currentHorizontalVelocity;
+    private Vector3 _desiredHorizontalVelocity;
+
+    private Vector3 _direction;
+    private float _currentSpeed;
+    private float _desiredSpeed;
 
     public PlayerMotor(CharacterController characterController, Transform transform, PlayerMovementConfig playerMovementConfig)
     {
@@ -17,33 +22,57 @@ public class PlayerMotor
         _playerMovementConfig = playerMovementConfig;
     }
 
-    public void SetHorizontalVelocity(Vector3 horizontalVelocity)
+    public void SetHorizontalVelocity(Vector3 deriction, float speed)
     {
-        velocity.x = horizontalVelocity.x;
-        velocity.z = horizontalVelocity.z;
+        _direction = deriction;
+        _desiredSpeed = speed;
+
+        _desiredHorizontalVelocity.x = _direction.x * speed;
+        _desiredHorizontalVelocity.z = _direction.z * speed;
     }
 
     public void SetVerticalVelocity(float verticalVelocity)
     {
-        velocity.y = verticalVelocity;
+        _currentHorizontalVelocity.y = verticalVelocity;
     }
 
     public void MovePlayer()
     {
         HandleGravity();
-        _characterController.Move(_transform.TransformDirection(velocity) * Time.deltaTime);
-        
-        //Debug.Log(_transform.TransformDirection(velocity).magnitude);
+        UpdateHorizontalVelocity();
+        _characterController.Move(_transform.TransformDirection(_currentHorizontalVelocity) * Time.deltaTime);
+
+        Debug.Log(_currentHorizontalVelocity);
     }
 
     public void HandleGravity()
     {
         if (_characterController.isGrounded)
         {
-            if (velocity.y < 0)
-                velocity.y = _playerMovementConfig.GroundStickForce;
+            if (_currentHorizontalVelocity.y < 0)
+                _currentHorizontalVelocity.y = _playerMovementConfig.GroundStickForce;
         }
         else
-            velocity.y -= _playerMovementConfig.Gravity * Time.deltaTime;
+            _currentHorizontalVelocity.y -= _playerMovementConfig.Gravity * Time.deltaTime;
+    }
+
+    private void UpdateHorizontalVelocity()
+    {
+        //_acceleration = _characterController.isGrounded ? _playerMovementConfig.GrondedAcceleration : _playerMovementConfig.AirAcceleration;
+
+        if (_characterController.isGrounded)
+        {
+            _currentSpeed = _desiredSpeed;
+        }
+        else
+        {
+            _currentSpeed = Mathf.MoveTowards(
+            _currentSpeed,
+            _desiredSpeed * _playerMovementConfig.AirSpeedMultiplie,
+            _playerMovementConfig.AirAcceleration * Time.deltaTime);
+        }
+
+        _currentHorizontalVelocity.x = _direction.x * _currentSpeed;
+        _currentHorizontalVelocity.z = _direction.z * _currentSpeed;
     }
 }

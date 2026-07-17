@@ -31,6 +31,6 @@ public class MoveStateIdle : FSM_Move_State
             return;
         }
 
-        _playerContext.Motor.SetHorizontalVelocity(new Vector3(0,0,0));
+       // _playerContext.Motor.SetHorizontalVelocity(new Vector3(0,0,0), 0);
     }
 }

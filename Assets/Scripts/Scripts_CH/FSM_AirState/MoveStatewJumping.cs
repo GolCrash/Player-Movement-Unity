@@ -31,7 +31,7 @@ public class AirStateJumping : FSM_Air_State
             _playerContext.Motor.remainingJumps--;
         }
 
-        if (_playerContext.Motor.velocity.y <= 0f)
+        if (_playerContext.Motor._currentHorizontalVelocity.y <= 0f)
         {
             _fsm_air.SetState<AirStateFall>();
             return;

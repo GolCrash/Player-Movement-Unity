@@ -8,6 +8,9 @@ public class PlayerMovementConfig : ScriptableObject
     [SerializeField] float runSpeed = 10f;
     [SerializeField] float sneakSpeed = 3f;
     [SerializeField] float crouchHeightCoeff = 2f;
+    [SerializeField] float groundedAcceleration = 1f; //Пока не используем
+    [SerializeField] float airAcceleration = 10f;
+    [SerializeField] float airSpeedMultiplie = 0.5f;
 
     [Header("Jump configs")]
     [SerializeField] float[] jumpCoeffs = { 2f, 1.5f };
@@ -27,4 +30,7 @@ public class PlayerMovementConfig : ScriptableObject
     public float JumpHeight => jumpHeight;
     public float Gravity => gravity;
     public float GroundStickForce => groundStickForce;
+    public float AirAcceleration => airAcceleration;
+    public float GrondedAcceleration => groundedAcceleration;
+    public float AirSpeedMultiplie => airSpeedMultiplie;
 }

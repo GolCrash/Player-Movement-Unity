@@ -37,6 +37,6 @@ public class MoveStateWalk : FSM_Move_State
             return;
         }
 
-        _playerContext.Motor.SetHorizontalVelocity(new Vector3(_playerContext.Input.moveInput.x, 0, _playerContext.Input.moveInput.y).normalized * _playerContext.MovementConfig.WalkSpeed);
+        _playerContext.Motor.SetHorizontalVelocity(new Vector3(_playerContext.Input.moveInput.x, 0, _playerContext.Input.moveInput.y).normalized, _playerContext.MovementConfig.WalkSpeed);
     }
 }
