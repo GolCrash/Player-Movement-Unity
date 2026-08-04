@@ -31,6 +31,18 @@ public class MoveStateRun : FSM_Move_State
             return;
         }
 
+        if (_playerContext.Input.moveInput.y == -1)
+        {
+            _fsm_movement.SetState<MoveStateWalk>();
+            return;
+        }
+
+        if (_playerContext.Input.sneakPressed && _playerContext.Input.moveInput.y == 1)
+        {
+            _fsm_movement.SetState<MoveStateSlide>();
+            return;
+        }
+
         _playerContext.Motor.SetHorizontalVelocity(new Vector3(_playerContext.Input.moveInput.x, 0, _playerContext.Input.moveInput.y).normalized, _playerContext.MovementConfig.RunSpeed);
     }
 }

@@ -20,6 +20,10 @@ public class PlayerMovementConfig : ScriptableObject
     [SerializeField] float gravity = 9.8f;
     [SerializeField] float groundStickForce = -2f;
 
+    [Header("Player parametrs")]
+    [SerializeField] float defaultHeight = 1f;
+    [SerializeField] float defaultScale = 2f;
+
 
     public bool CanJump = true;
     public float WalkSpeed => walkSpeed;
@@ -33,4 +37,6 @@ public class PlayerMovementConfig : ScriptableObject
     public float AirAcceleration => airAcceleration;
     public float GrondedAcceleration => groundedAcceleration;
     public float AirSpeedMultiplie => airSpeedMultiplie;
+    public float DefaultHeight => defaultHeight;
+    public float DefaultScale => defaultScale;
 }

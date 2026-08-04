@@ -32,6 +32,7 @@ public class MovementWithFSM : MonoBehaviour
         _fsmMove.AddState(new MoveStateWalk(_fsmMove, _playerContext));
         _fsmMove.AddState(new MoveStateRun(_fsmMove, _playerContext));
         _fsmMove.AddState(new MoveStateSneak(_fsmMove, _playerContext));
+        _fsmMove.AddState(new MoveStateSlide(_fsmMove, _playerContext));
 
         _fsmAir.AddState(new AirStateFall(_fsmAir, _playerContext));
         _fsmAir.AddState(new AirStateGrounded(_fsmAir, _playerContext));

@@ -12,7 +12,7 @@ public class PlayerMotor
     private Vector3 _desiredHorizontalVelocity;
 
     private Vector3 _direction;
-    private float _currentSpeed;
+    public float _currentSpeed;
     private float _desiredSpeed;
 
     public PlayerMotor(CharacterController characterController, Transform transform, PlayerMovementConfig playerMovementConfig)
@@ -42,7 +42,7 @@ public class PlayerMotor
         UpdateHorizontalVelocity();
         _characterController.Move(_transform.TransformDirection(_currentHorizontalVelocity) * Time.deltaTime);
 
-        Debug.Log(_currentHorizontalVelocity);
+       // Debug.Log(_currentHorizontalVelocity);
     }
 
     public void HandleGravity()

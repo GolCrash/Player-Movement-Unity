@@ -10,6 +10,7 @@ public class MoveStateIdle : FSM_Move_State
     public override void EnterState()
     {
         Debug.Log("¬ход в состо€ние Idle");
+        _playerContext.Motor.SetHorizontalVelocity(new Vector3(0, 0, 0), 0);
     }
 
     public override void ExitState()
@@ -31,6 +32,6 @@ public class MoveStateIdle : FSM_Move_State
             return;
         }
 
-       // _playerContext.Motor.SetHorizontalVelocity(new Vector3(0,0,0), 0);
+        
     }
 }

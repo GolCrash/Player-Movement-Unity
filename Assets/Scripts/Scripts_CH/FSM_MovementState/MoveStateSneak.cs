@@ -13,8 +13,8 @@ public class MoveStateSneak : FSM_Move_State
     {
         Debug.Log("¬ход в состо€ние Sneak");
 
-        _defaultHeight = _playerContext.CharacterController.height;
-        _defaultScale = _playerContext.CharacterController.transform.localScale.y;
+        _defaultHeight = _playerContext.MovementConfig.DefaultHeight;
+        _defaultScale = _playerContext.MovementConfig.DefaultScale;
 
         _playerContext.CharacterController.transform.localScale = new Vector3(1, _defaultScale / _playerContext.MovementConfig.CrouchHeightCoeff, 1); //ѕока нет готовой анимации, уменьшаем кодом нашего "игрока"
         _playerContext.CharacterController.height = _defaultHeight / _playerContext.MovementConfig.CrouchHeightCoeff;

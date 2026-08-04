@@ -25,7 +25,7 @@ public class MoveStateWalk : FSM_Move_State
             return;
         }
 
-        if (_playerContext.Input.runPressed)
+        if (_playerContext.Input.runPressed && _playerContext.Input.moveInput.y != -1)
         { 
             _fsm_movement.SetState<MoveStateRun>();
             return;
