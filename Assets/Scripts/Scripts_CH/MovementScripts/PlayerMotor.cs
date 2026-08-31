@@ -8,8 +8,8 @@ public class PlayerMotor
 
     public int remainingJumps;
 
-    public Vector3 _currentHorizontalVelocity;
-    private Vector3 _desiredHorizontalVelocity;
+    public Vector3 _currentVelocity;
+    private Vector3 _desiredVelocity;
 
     private Vector3 _direction;
     public float _currentSpeed;
@@ -27,20 +27,28 @@ public class PlayerMotor
         _direction = deriction;
         _desiredSpeed = speed;
 
-        _desiredHorizontalVelocity.x = _direction.x * speed;
-        _desiredHorizontalVelocity.z = _direction.z * speed;
+        _currentVelocity.x = _direction.x * speed;
+        _currentVelocity.z = _direction.z * speed;
+    }
+
+    public void SetHorizontalVelocity(float speed)
+    {
+        _desiredSpeed = speed;
+
+        _currentVelocity.x = _direction.x * speed;
+        _currentVelocity.z = _direction.z * speed;
     }
 
     public void SetVerticalVelocity(float verticalVelocity)
     {
-        _currentHorizontalVelocity.y = verticalVelocity;
+        _currentVelocity.y = verticalVelocity;
     }
 
     public void MovePlayer()
     {
         HandleGravity();
         UpdateHorizontalVelocity();
-        _characterController.Move(_transform.TransformDirection(_currentHorizontalVelocity) * Time.deltaTime);
+        _characterController.Move(_transform.TransformDirection(_currentVelocity) * Time.deltaTime);
 
        // Debug.Log(_currentHorizontalVelocity);
     }
@@ -49,11 +57,11 @@ public class PlayerMotor
     {
         if (_characterController.isGrounded)
         {
-            if (_currentHorizontalVelocity.y < 0)
-                _currentHorizontalVelocity.y = _playerMovementConfig.GroundStickForce;
+            if (_currentVelocity.y < 0)
+                _currentVelocity.y = _playerMovementConfig.GroundStickForce;
         }
         else
-            _currentHorizontalVelocity.y -= _playerMovementConfig.Gravity * Time.deltaTime;
+            _currentVelocity.y -= _playerMovementConfig.Gravity * Time.deltaTime;
     }
 
     private void UpdateHorizontalVelocity()
@@ -66,13 +74,15 @@ public class PlayerMotor
         }
         else
         {
-            _currentSpeed = Mathf.MoveTowards(
-            _currentSpeed,
-            _desiredSpeed * _playerMovementConfig.AirSpeedMultiplie,
-            _playerMovementConfig.AirAcceleration * Time.deltaTime);
+           // _currentSpeed = Mathf.MoveTowards(
+           // _currentSpeed,
+           // _desiredSpeed * _playerMovementConfig.AirSpeedMultiplie,
+           // _playerMovementConfig.AirAcceleration * Time.deltaTime);
+
+            _currentSpeed = _desiredSpeed;
         }
 
-        _currentHorizontalVelocity.x = _direction.x * _currentSpeed;
-        _currentHorizontalVelocity.z = _direction.z * _currentSpeed;
+        _currentVelocity.x = _direction.x * _currentSpeed;
+        _currentVelocity.z = _direction.z * _currentSpeed;
     }
 }

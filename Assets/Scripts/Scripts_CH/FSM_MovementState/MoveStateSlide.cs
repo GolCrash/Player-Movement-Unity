@@ -24,16 +24,21 @@ public class MoveStateSlide : FSM_Move_State
         _playerContext.CharacterController.transform.localScale = new Vector3(1, _defaultScale / _playerContext.MovementConfig.CrouchHeightCoeff, 1); //ѕока нет готовой анимации, уменьшаем кодом нашего "игрока"
         _playerContext.CharacterController.height = _defaultHeight / _playerContext.MovementConfig.CrouchHeightCoeff;
 
+        _playerContext.Camera.SetSensMultiplie(0.1f);
     }
 
     public override void ExitState()
     {
         Debug.Log("¬ыход в состо€ние Slide");
 
+        _playerContext.Camera.SetSensMultiplie(1f);
+
         if (CanStand())
         {
             _playerContext.CharacterController.height = _defaultHeight;
             _playerContext.CharacterController.transform.localScale = new Vector3(1, _defaultScale, 1);
+
+
         }
     }
 
@@ -57,20 +62,21 @@ public class MoveStateSlide : FSM_Move_State
             return;
         }
 
-        if (!CanStand())
+        if (!CanStand() && _slideStartSpeed == 3)
         {
             _fsm_movement.SetState<MoveStateSneak>();
             return;
         }
 
-        Vector3 localDir = _playerContext.Motor._currentHorizontalVelocity.normalized;
+        Vector3 localDir = _playerContext.Motor._currentVelocity.normalized;
 
         _slideStartSpeed = Mathf.MoveTowards(_slideStartSpeed, 3, 7 * Time.deltaTime);
 
         _playerContext.Motor.SetHorizontalVelocity(localDir, _slideStartSpeed);
+
     }
 
-    public bool CanStand()
+    private bool CanStand()
     {
         Vector3 center = _playerContext.CharacterController.center + _playerContext.CharacterController.transform.position;
         float radius = _playerContext.CharacterController.radius;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FSM_Movement
 {
+    public bool isActive {  get; set; } = true;
+
     public FSM_Move_State currentState {  get; private set; }
 
     private Dictionary<Type, FSM_Move_State> _states = new Dictionary<Type, FSM_Move_State>();
@@ -32,6 +34,7 @@ public class FSM_Movement
 
     public void Update()
     {
-        currentState?.UpdateState();
+        if (isActive)
+            currentState?.UpdateState();
     }
 }

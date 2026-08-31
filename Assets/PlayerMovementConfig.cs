@@ -11,9 +11,11 @@ public class PlayerMovementConfig : ScriptableObject
     [SerializeField] float groundedAcceleration = 1f; //Пока не используем
     [SerializeField] float airAcceleration = 10f;
     [SerializeField] float airSpeedMultiplie = 0.5f;
+    [SerializeField] float sensMouse = 0.187f;
+    [SerializeField] float sensMultiplie = 1f;
 
     [Header("Jump configs")]
-    [SerializeField] float[] jumpCoeffs = { 2f, 1.5f };
+    [SerializeField] float[] jumpCoeffs = { 1f, 0.75f };
     [SerializeField] float jumpHeight = 2f;
 
     [Header("General configs")]
@@ -39,4 +41,6 @@ public class PlayerMovementConfig : ScriptableObject
     public float AirSpeedMultiplie => airSpeedMultiplie;
     public float DefaultHeight => defaultHeight;
     public float DefaultScale => defaultScale;
+    public float SensMouse => sensMouse;
+    public float SensMultiplie => sensMultiplie;
 }

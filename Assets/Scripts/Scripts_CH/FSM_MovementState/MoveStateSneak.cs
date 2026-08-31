@@ -45,7 +45,7 @@ public class MoveStateSneak : FSM_Move_State
         _playerContext.Motor.SetHorizontalVelocity(new Vector3(_playerContext.Input.moveInput.x, 0, _playerContext.Input.moveInput.y).normalized, _playerContext.MovementConfig.SneakSpeed);
     }
 
-    public bool CanStand()
+    private bool CanStand()
     {
         Vector3 center = _playerContext.CharacterController.center + _playerContext.CharacterController.transform.position;
         float radius = _playerContext.CharacterController.radius;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FSM_Air
 {
+    public bool isActive { get; set; } = true;
+
     public FSM_Air_State currentState {  get; private set; }
 
     private Dictionary<Type, FSM_Air_State> _states = new Dictionary<Type, FSM_Air_State>();
@@ -32,6 +34,7 @@ public class FSM_Air
 
     public void Update()
     {
-        currentState?.UpdateState();
+        if (isActive)
+            currentState?.UpdateState();
     }
 }
