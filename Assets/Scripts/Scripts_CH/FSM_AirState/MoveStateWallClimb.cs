@@ -2,11 +2,11 @@
 
 namespace AssemblyCSharp.Assets.Scripts.Scripts_CH.FSM_AirState
 {
-    public class MoveStatewWallClimb : FSM_Air_State
+    public class MoveStateWallClimb : FSM_Air_State
     {
         private float _climbSpeed;
 
-        public MoveStatewWallClimb(FSM_Air fsm_air, PlayerContext playerContext) : base(fsm_air, playerContext)
+        public MoveStateWallClimb(FSM_Air fsm_air, PlayerContext playerContext) : base(fsm_air, playerContext)
         {
         }
 
@@ -32,6 +32,12 @@ namespace AssemblyCSharp.Assets.Scripts.Scripts_CH.FSM_AirState
         {
             if (_playerContext.Input.jumpPressed)
             {
+                _fsm_air.SetState<AirStateFall>();
+                return;
+            }
+
+            if (_playerContext.Input.jumpPressed && _playerContext.Input.moveInput.y == -1)
+            {
                 _playerContext.Camera.Rotate180();
 
                _fsm_air.SetState<AirStateJumping>();
@@ -47,8 +53,7 @@ namespace AssemblyCSharp.Assets.Scripts.Scripts_CH.FSM_AirState
             
             if (IsLedge())
             {
-                _playerContext.Motor.SetVerticalVelocity(0);
-                Debug.Log("ДА");
+                _fsm_air.SetState<MoveStateWallLedge>();
                 return;
             }
 

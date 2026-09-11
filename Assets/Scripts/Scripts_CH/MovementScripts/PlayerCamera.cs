@@ -11,6 +11,7 @@ public class PlayerCamera : MonoBehaviour
     private PlayerMovementConfig _playerMovementConfig;
 
     private float SensMultiplie = 1f;
+    private float returnSensMultiplie;
 
     private bool isLimit;
     private float rotationCenter;
@@ -25,11 +26,18 @@ public class PlayerCamera : MonoBehaviour
     public void Initialize(PlayerMovementConfig playerMovementConfig)
     {
         _playerMovementConfig = playerMovementConfig;
+        returnSensMultiplie = SensMultiplie;
     }
 
     public void SetSensMultiplie(float multi)
     {
+        returnSensMultiplie = SensMultiplie;
         SensMultiplie = multi;
+    }
+
+    public void ResetSensMultiplie()
+    {
+        SensMultiplie = returnSensMultiplie;
     }
 
     public void SetRotationLimit(float lim)
@@ -52,11 +60,19 @@ public class PlayerCamera : MonoBehaviour
         _rotationTarget =  yaw + 180;
         isRotation = true;
     }
-    
+
+    public void NormalizedForward(RaycastHit hit)
+    {
+        Vector3 wallNormal = hit.normal;
+
+        yaw = Quaternion.LookRotation(-wallNormal, Vector3.up).eulerAngles.y;
+    }
+
     private void Update()
     {
         if (isRotation) 
         {
+
             yaw = Mathf.MoveTowards(yaw, _rotationTarget, 720f * Time.deltaTime);
 
             player.rotation = Quaternion.Euler(0f, yaw, 0f);
@@ -89,8 +105,6 @@ public class PlayerCamera : MonoBehaviour
         pitch -= mouseDelta.y * _playerMovementConfig.SensMouse * SensMultiplie;
 
         pitch = Mathf.Clamp(pitch, -70f, 70f);
-
-        
         
         transform.localRotation = Quaternion.Euler(pitch, 0, 0);
     }

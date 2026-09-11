@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class MoveStateRun : FSM_Move_State
 {
+
+    private Vector3 inputDir;
+    private Vector3 worldDir;
+
     public MoveStateRun(FSM_Movement fsm_movement, PlayerContext playerContext) : base(fsm_movement, playerContext)
     {
     }
@@ -43,6 +47,10 @@ public class MoveStateRun : FSM_Move_State
             return;
         }
 
-        _playerContext.Motor.SetHorizontalVelocity(new Vector3(_playerContext.Input.moveInput.x, 0, _playerContext.Input.moveInput.y).normalized, _playerContext.MovementConfig.RunSpeed);
+        inputDir = new Vector3(_playerContext.Input.moveInput.x, 0, _playerContext.Input.moveInput.y).normalized;
+
+        worldDir = _playerContext.CharacterController.transform.TransformDirection(inputDir);
+
+        _playerContext.Motor.SetHorizontalVelocity(worldDir, _playerContext.MovementConfig.RunSpeed);
     }
 }

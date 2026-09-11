@@ -5,6 +5,9 @@ public class MoveStateSneak : FSM_Move_State
     private float _defaultHeight;
     private float _defaultScale;
 
+    private Vector3 inputDir;
+    private Vector3 worldDir;
+
     public MoveStateSneak(FSM_Movement fsm_movement, PlayerContext playerContext) : base(fsm_movement, playerContext)
     {
     }
@@ -42,7 +45,11 @@ public class MoveStateSneak : FSM_Move_State
             return;
         }
 
-        _playerContext.Motor.SetHorizontalVelocity(new Vector3(_playerContext.Input.moveInput.x, 0, _playerContext.Input.moveInput.y).normalized, _playerContext.MovementConfig.SneakSpeed);
+        inputDir = new Vector3(_playerContext.Input.moveInput.x, 0, _playerContext.Input.moveInput.y).normalized;
+
+        worldDir = _playerContext.CharacterController.transform.TransformDirection(inputDir);
+
+        _playerContext.Motor.SetHorizontalVelocity(worldDir, _playerContext.MovementConfig.SneakSpeed);
     }
 
     private bool CanStand()

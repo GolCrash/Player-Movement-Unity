@@ -44,9 +44,15 @@ public class AirStateJumping : FSM_Air_State
 
         if (ÑanClimb())
         {
-            AlignToWall(_wallHit);
+            _playerContext.Camera.NormalizedForward(_wallHit);
 
-            _fsm_air.SetState<MoveStatewWallClimb>();
+            _fsm_air.SetState<MoveStateWallClimb>();
+            return;
+        }
+
+        if (_playerContext.StateMachine.Ground.currentState.GetType() == typeof(MoveStateRun) && ÑanWallRun())
+        {
+            _fsm_air.SetState<MoveStateWallRun>();
             return;
         }
     }
@@ -57,17 +63,20 @@ public class AirStateJumping : FSM_Air_State
 
         Vector3 direction = _playerContext.CharacterController.transform.forward;
 
-        float distance = 1f;
+        float distance = 0.7f;
 
         return Physics.Raycast(origin, direction, out _wallHit, distance);
     }
 
-    private void AlignToWall(RaycastHit hit)
+    private bool ÑanWallRun()
     {
-        Vector3 wallNormal = hit.normal;
+        Vector3 origin = _playerContext.CharacterController.transform.position - Vector3.up * 1;
 
-        Quaternion targetRotation = Quaternion.LookRotation(-wallNormal, Vector3.up);
+        Vector3 directionRight = _playerContext.CharacterController.transform.right;
+        Vector3 directionLeft = -_playerContext.CharacterController.transform.right;
 
-        _playerContext.CharacterController.transform.rotation = targetRotation;
+        float distance = 1f;
+
+        return Physics.Raycast(origin, directionRight, distance) || Physics.Raycast(origin, directionLeft, distance);
     }
 }

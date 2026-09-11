@@ -34,6 +34,8 @@ public class PlayerStateMachine
         Air.AddState(new AirStateFall(Air, _playerContext));
         Air.AddState(new AirStateGrounded(Air, _playerContext));
         Air.AddState(new AirStateJumping(Air, _playerContext));
-        Air.AddState(new MoveStatewWallClimb(Air, _playerContext));
+        Air.AddState(new MoveStateWallClimb(Air, _playerContext));
+		Air.AddState(new MoveStateWallLedge(Air, _playerContext));
+        Air.AddState(new MoveStateWallRun(Air, _playerContext));
     }
 }

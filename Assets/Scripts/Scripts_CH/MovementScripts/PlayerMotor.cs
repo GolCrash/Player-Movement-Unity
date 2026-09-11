@@ -48,7 +48,7 @@ public class PlayerMotor
     {
         HandleGravity();
         UpdateHorizontalVelocity();
-        _characterController.Move(_transform.TransformDirection(_currentVelocity) * Time.deltaTime);
+        _characterController.Move(_currentVelocity * Time.deltaTime);
 
        // Debug.Log(_currentHorizontalVelocity);
     }

@@ -31,7 +31,7 @@ public class MoveStateSlide : FSM_Move_State
     {
         Debug.Log("Выход в состояние Slide");
 
-        _playerContext.Camera.SetSensMultiplie(1f);
+        _playerContext.Camera.ResetSensMultiplie();
 
         if (CanStand())
         {
@@ -56,15 +56,15 @@ public class MoveStateSlide : FSM_Move_State
             return;
         }
 
-        if (_slideStartSpeed == 3)
-        {
-            _fsm_movement.SetState<MoveStateIdle>();
-            return;
-        }
-
         if (!CanStand() && _slideStartSpeed == 3)
         {
             _fsm_movement.SetState<MoveStateSneak>();
+            return;
+        }
+
+        if (_slideStartSpeed == 3)
+        {
+            _fsm_movement.SetState<MoveStateIdle>();
             return;
         }
 
