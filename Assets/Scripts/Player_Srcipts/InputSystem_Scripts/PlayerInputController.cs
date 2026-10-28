@@ -10,6 +10,7 @@ public class PlayerInputController : MonoBehaviour
     public bool flyPressed { get; private set; }
     public bool rightClick { get; private set; }
     public bool leftClick { get; private set; }
+    public bool activeInventory { get; private set; }
 
     private void Update()
     {
@@ -32,6 +33,7 @@ public class PlayerInputController : MonoBehaviour
 
         rightClick = Mouse.current.rightButton.isPressed;
         leftClick = Mouse.current.leftButton.isPressed;
-      
+
+        activeInventory = Keyboard.current.tabKey.wasPressedThisFrame;
     }
 }

@@ -4,7 +4,6 @@ public class PlayerInstaller : MonoBehaviour
 {
     [SerializeField]
     private PlayerMovementConfig _movementConfig;
-
     private PlayerContext _playerContext;
 
     private void Awake()
@@ -27,5 +26,6 @@ public class PlayerInstaller : MonoBehaviour
 
         movement.Initialize(_playerContext);
         ineractive.Initialize(_playerContext);
+        inventory.Initialized(_playerContext);
     }
 }
